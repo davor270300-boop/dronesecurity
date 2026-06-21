@@ -159,71 +159,74 @@ export default function InteractiveSimulator({ isDarkMode = true }: InteractiveS
               ISO 400 // CAM_11 // 60FPS
             </div>
 
-            {/* Vector Simulated Condos Map */}
-            <div className="flex-1 w-full bg-slate-900/50 p-6 relative select-none min-h-[300px]">
-              
-              {/* Isometric roads or walls decorative paths */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30">
-                <rect x="50" y="50" width="80" height="30" rx="4" fill="#334155" />
-                <rect x="220" y="40" width="100" height="40" rx="4" fill="#334155" />
-                <rect x="380" y="100" width="80" height="60" rx="4" fill="#334155" />
-                <rect x="180" y="220" width="90" height="50" rx="4" fill="#334155" />
+            {/* Scrollable Map Container on Mobile */}
+            <div className="flex-1 w-full overflow-x-auto">
+              {/* Vector Simulated Condos Map */}
+              <div className="w-full min-w-[580px] bg-slate-900/50 p-6 relative select-none min-h-[300px]">
                 
-                {/* Connecting roads line */}
-                <path d="M 120,70 L 340,50 L 420,180 L 260,250 L 100,210 Z" fill="none" stroke="#06b6d4" strokeWidth="2" strokeDasharray="6 4" />
-              </svg>
-
-              {/* Graphical Houses representation on screen */}
-              <div className="absolute top-[80px] left-[60px] bg-slate-800 border border-slate-700 w-16 h-12 rounded-lg flex items-center justify-center shadow-lg">
-                <span className="text-[10px] font-bold text-slate-400 font-mono">LOTE 01</span>
-              </div>
-              <div className="absolute top-[60px] left-[240px] bg-slate-800 border border-slate-700 w-16 h-12 rounded-lg flex items-center justify-center shadow-lg">
-                <span className="text-[10px] font-bold text-slate-400 font-mono">LOTE 02</span>
-              </div>
-              <div className="absolute top-[120px] right-[40px] bg-slate-800 border border-slate-700 w-20 h-16 rounded-lg flex items-center justify-center shadow-lg">
-                <span className="text-[10px] font-bold text-slate-400 font-mono">CASA CLUB</span>
-              </div>
-              <div className="absolute bottom-[60px] left-[180px] bg-slate-800 border border-slate-700 w-24 h-12 rounded-lg flex items-center justify-center shadow-lg">
-                <span className="text-[10px] font-bold text-slate-400 font-mono">PISCINA / PARQUE</span>
-              </div>
-
-              {/* Guard Tower / Entry checkpoint */}
-              <div className="absolute top-[180px] left-[20px] bg-slate-950 border-2 border-emerald-500/50 w-12 h-12 rounded-xl flex flex-col items-center justify-center shadow-lg">
-                <span className="text-[8px] font-bold text-emerald-400 uppercase">Estación</span>
-                <span className="text-[9px] font-bold text-emerald-400">DJI BASE</span>
-              </div>
-
-              {/* Simulated intrusión event indicator */}
-              {securityStatus === "alert" && (
-                <div className="absolute top-[140px] left-[280px] z-50 flex flex-col items-center animate-bounce">
-                  <div className="bg-red-500 text-white p-2 rounded-xl flex items-center gap-1.5 shadow-xl border border-red-400 text-xs font-bold">
-                    <AlertTriangle className="w-4 h-4" />
-                    <span>Sospechoso Detectado</span>
-                  </div>
-                  <div className="w-4 h-4 bg-red-500 rotate-45 -mt-2"></div>
-                </div>
-              )}
-
-              {/* Interactive Vector patroller Drone visual node */}
-              <div
-                className="absolute transition-all duration-3000 ease-in-out z-20"
-                style={{ left: `${dronePos.x}px`, top: `${dronePos.y}px`, transform: `translate(-50%, -50%)` }}
-              >
-                {/* Glowing laser sweeping representation */}
-                <div className={`absolute -inset-10 rounded-full opacity-20 pointer-events-none scale-150 animate-pulse ${securityStatus === "alert" ? "bg-red-500" : "bg-cyan-400"}`}></div>
-                
-                {/* Vector drone model icon with blades */}
-                <div className={`p-3 rounded-full relative shadow-lg border ${securityStatus === "alert" ? "bg-red-650 border-red-500 text-white" : "bg-cyan-500 border-cyan-400 text-slate-950"}`}>
-                  <Video className="w-5 h-5 animate-pulse" />
+                {/* Isometric roads or walls decorative paths */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30">
+                  <rect x="50" y="50" width="80" height="30" rx="4" fill="#334155" />
+                  <rect x="220" y="40" width="100" height="40" rx="4" fill="#334155" />
+                  <rect x="380" y="100" width="80" height="60" rx="4" fill="#334155" />
+                  <rect x="180" y="220" width="90" height="50" rx="4" fill="#334155" />
                   
-                  {/* Miniature spinning rotors */}
-                  <span className="absolute -top-1 -left-1 w-2 h-2 rounded-full border border-slate-500 bg-slate-300 animate-spin"></span>
-                  <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full border border-slate-500 bg-slate-300 animate-spin"></span>
-                  <span className="absolute -bottom-1 -left-1 w-2 h-2 rounded-full border border-slate-500 bg-slate-300 animate-spin"></span>
-                  <span className="absolute -bottom-1 -right-1 w-2 h-2 rounded-full border border-slate-500 bg-slate-300 animate-spin"></span>
-                </div>
-              </div>
+                  {/* Connecting roads line */}
+                  <path d="M 120,70 L 340,50 L 420,180 L 260,250 L 100,210 Z" fill="none" stroke="#06b6d4" strokeWidth="2" strokeDasharray="6 4" />
+                </svg>
 
+                {/* Graphical Houses representation on screen */}
+                <div className="absolute top-[80px] left-[60px] bg-slate-800 border border-slate-700 w-16 h-12 rounded-lg flex items-center justify-center shadow-lg">
+                  <span className="text-[10px] font-bold text-slate-400 font-mono">LOTE 01</span>
+                </div>
+                <div className="absolute top-[60px] left-[240px] bg-slate-800 border border-slate-700 w-16 h-12 rounded-lg flex items-center justify-center shadow-lg">
+                  <span className="text-[10px] font-bold text-slate-400 font-mono">LOTE 02</span>
+                </div>
+                <div className="absolute top-[120px] right-[40px] bg-slate-800 border border-slate-700 w-20 h-16 rounded-lg flex items-center justify-center shadow-lg">
+                  <span className="text-[10px] font-bold text-slate-400 font-mono">CASA CLUB</span>
+                </div>
+                <div className="absolute bottom-[60px] left-[180px] bg-slate-800 border border-slate-700 w-24 h-12 rounded-lg flex items-center justify-center shadow-lg">
+                  <span className="text-[10px] font-bold text-slate-400 font-mono">PISCINA / PARQUE</span>
+                </div>
+
+                {/* Guard Tower / Entry checkpoint */}
+                <div className="absolute top-[180px] left-[20px] bg-slate-950 border-2 border-emerald-500/50 w-12 h-12 rounded-xl flex flex-col items-center justify-center shadow-lg">
+                  <span className="text-[8px] font-bold text-emerald-400 uppercase">Estación</span>
+                  <span className="text-[9px] font-bold text-emerald-400">DJI BASE</span>
+                </div>
+
+                {/* Simulated intrusión event indicator */}
+                {securityStatus === "alert" && (
+                  <div className="absolute top-[140px] left-[280px] z-50 flex flex-col items-center animate-bounce">
+                    <div className="bg-red-500 text-white p-2 rounded-xl flex items-center gap-1.5 shadow-xl border border-red-400 text-xs font-bold">
+                      <AlertTriangle className="w-4 h-4" />
+                      <span>Sospechoso Detectado</span>
+                    </div>
+                    <div className="w-4 h-4 bg-red-500 rotate-45 -mt-2"></div>
+                  </div>
+                )}
+
+                {/* Interactive Vector patroller Drone visual node */}
+                <div
+                  className="absolute transition-all duration-3000 ease-in-out z-20"
+                  style={{ left: `${dronePos.x}px`, top: `${dronePos.y}px`, transform: `translate(-50%, -50%)` }}
+                >
+                  {/* Glowing laser sweeping representation */}
+                  <div className={`absolute -inset-10 rounded-full opacity-20 pointer-events-none scale-150 animate-pulse ${securityStatus === "alert" ? "bg-red-500" : "bg-cyan-400"}`}></div>
+                  
+                  {/* Vector drone model icon with blades */}
+                  <div className={`p-3 rounded-full relative shadow-lg border ${securityStatus === "alert" ? "bg-red-650 border-red-500 text-white" : "bg-cyan-500 border-cyan-400 text-slate-950"}`}>
+                    <Video className="w-5 h-5 animate-pulse" />
+                    
+                    {/* Miniature spinning rotors */}
+                    <span className="absolute -top-1 -left-1 w-2 h-2 rounded-full border border-slate-500 bg-slate-300 animate-spin"></span>
+                    <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full border border-slate-500 bg-slate-300 animate-spin"></span>
+                    <span className="absolute -bottom-1 -left-1 w-2 h-2 rounded-full border border-slate-500 bg-slate-300 animate-spin"></span>
+                    <span className="absolute -bottom-1 -right-1 w-2 h-2 rounded-full border border-slate-500 bg-slate-300 animate-spin"></span>
+                  </div>
+                </div>
+
+              </div>
             </div>
 
             {/* Bottom HUD info bar */}

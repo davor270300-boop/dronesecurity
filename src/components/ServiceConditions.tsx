@@ -22,7 +22,7 @@ import {
   Shield
 } from "lucide-react";
 
-const trainingImg = "/src/assets/images/drone_pilot_training_1782076984788.jpg";
+import trainingImg from "../assets/images/drone_pilot_training_1782076984788.jpg";
 import { SimulationPatrol } from "../types";
 
 interface ServiceConditionsProps {

@@ -1,6 +1,6 @@
 import { Shield, Clock, Users, ShieldAlert, ArrowRight, CheckCircle2 } from "lucide-react";
 
-const heroImg = "/src/assets/images/drone_security_hero_1782076968900.jpg";
+import heroImg from "../assets/images/drone_security_hero_1782076968900.jpg";
 
 interface HeroSectionProps {
   onScrollToProposal: () => void;

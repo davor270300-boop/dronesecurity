@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Shield, Clock, Phone, Mail, Award, MessageCircle, ArrowRight, HelpCircle, ChevronDown, CheckCircle, Sun, Moon } from "lucide-react";
+import { Shield, Clock, Phone, Mail, Award, MessageCircle, ArrowRight, HelpCircle, ChevronDown, CheckCircle, Sun, Moon, Menu, X } from "lucide-react";
 import HeroSection from "./components/HeroSection";
 import ServiceConditions from "./components/ServiceConditions";
 import InteractiveSimulator from "./components/InteractiveSimulator";
@@ -9,6 +9,7 @@ import { PlanType } from "./types";
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   
   // Dynamic 12-flights calculator based on real-time clock
   const [timeState, setTimeState] = useState({
@@ -177,7 +178,7 @@ export default function App() {
           </div>
 
           {/* Theme Switch & Call actions on Menu */}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
               className={`p-2 rounded-lg border transition-all cursor-pointer flex items-center justify-center ${
@@ -196,10 +197,74 @@ export default function App() {
             >
               Solicitar Demo
             </button>
+
+            {/* Mobile Menu Button toggle */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={`md:hidden p-2 rounded-lg border transition-all cursor-pointer flex items-center justify-center ${
+                isDarkMode 
+                  ? "bg-slate-900 border-slate-850 text-slate-300 hover:bg-slate-800" 
+                  : "bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-150"
+              }`}
+              aria-label="Toggle Menu"
+            >
+              {isMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
           </div>
 
         </div>
       </header>
+
+      {/* Mobile Drawer Menu Overlay */}
+      {isMenuOpen && (
+        <div className={`md:hidden border-b transition-all duration-300 ${
+          isDarkMode ? "bg-slate-950/95 border-slate-900 text-slate-100" : "bg-white/95 border-slate-200 text-slate-900 shadow-md"
+        } sticky top-18 z-30 backdrop-blur-md`}>
+          <nav className="flex flex-col p-4 space-y-3 font-mono text-xs tracking-wider uppercase font-bold">
+            <button
+              onClick={() => { handleScrollToSection("hero"); setIsMenuOpen(false); }}
+              className="w-full text-left py-2 hover:text-cyan-500 transition-colors cursor-pointer"
+            >
+              Inicio
+            </button>
+            <button
+              onClick={() => { handleScrollToSection("conditions"); setIsMenuOpen(false); }}
+              className="w-full text-left py-2 hover:text-cyan-500 transition-colors cursor-pointer"
+            >
+              12 Vuelos
+            </button>
+            <button
+              onClick={() => { handleScrollToSection("simulator"); setIsMenuOpen(false); }}
+              className="w-full text-left py-2 hover:text-cyan-500 transition-colors cursor-pointer"
+            >
+              Simulador
+            </button>
+            <button
+              onClick={() => { handleScrollToSection("proposal-section"); setIsMenuOpen(false); }}
+              className="w-full text-left py-2 text-cyan-500 hover:text-cyan-600 transition-colors cursor-pointer"
+            >
+              Cotizar
+            </button>
+            
+            {/* Real-time calculated telemetry info also visible on mobile menu */}
+            <div className={`border-t pt-3 mt-1 flex flex-col gap-1.5 font-mono ${isDarkMode ? "border-slate-900 font-bold" : "border-slate-150 font-bold"}`}>
+              <div className="flex justify-between items-center text-[10px] text-slate-500">
+                <span>LOCAL TIME (PE)</span>
+                <span className={`font-bold ${isDarkMode ? "text-slate-300" : "text-slate-700"}`}>{timeState.timeStr}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-cyan-500 text-[10px] font-extrabold flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5" />
+                  VUELO {timeState.currentFlight}/12
+                </span>
+                <span className={`text-[9px] ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}>
+                  {timeState.isCharging ? "Base de Carga" : "Patrullando"}
+                </span>
+              </div>
+            </div>
+          </nav>
+        </div>
+      )}
 
       {/* Hero Section */}
       <HeroSection
